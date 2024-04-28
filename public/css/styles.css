@@ -2,5 +2,159 @@
 *,
 *:before,
 *:after {
+  font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  padding: 12px 10px;
+  margin-bottom: 24px;
+}
+
+#top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.siteName a {
+  font-size: 36px;
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
+}
+
+#tools a {
+  font-size: 24px;
+  font-weight: 400;
+  color: black;
+  text-decoration: none;
+}
+
+nav {
+  background: black;
+  padding: 10px 24px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  max-width: 475px;
+  margin: auto;
+  list-style-type: none;
+  color: white;
+  padding: 0;
+}
+
+footer {
+  padding-top: 48px;
+  padding-left: 16px;
+}
+
+.hero {
+  padding: 24px 16px;
+  background-size: fill;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(/images/vehicles/delorean.jpg);
+}
+
+.hero--overlay {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  width: fit-content;
+}
+
+.hero--overlay_title {
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(41, 95, 196);
+}
+
+.hero--overlay_feature-text {
+  font-size: 18px;
+  color: rgb(41, 95, 196);
+}
+
+.hero--overlay_cta {
+  display: block;
+  background: rgb(41, 95, 196);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  width: fit-content;
+  padding: 12px 24px;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+.reviews-and-upgrades {
+  padding: 0 16px;
+}
+
+.reviews {
+  margin-bottom: 36px;
+}
+
+.reviews--list {
+  padding: 0 0 0 24px;
+}
+
+.reviews--list_item:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.upgrades--grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+  row-gap: 48px;
+}
+
+.upgrades--grid-item {
+  height: 100%;
+}
+
+.upgrades--grid-item_img-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:rgb(41, 95, 196);
+  height: 100%;
+  padding: 24px;
+}
+
+.upgrades--grid-item_link {
+  display: block;
+  text-align: center;
+}
+
+@media only screen and (min-width: 1024px) {
+  html {
+    background-image: url(/images/site/checkerboard.jpg);
+    background-size: 350px;
+  }
+
+  body {
+    max-width: 900px;
+    margin: 48px auto;
+    border: 4px solid rgb(41, 95, 196);
+    border-radius: 20px;
+    background-color: white;
+  }
+
+  .reviews-and-upgrades {
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: 48px;
+  }
+
+  .reviews,
+  .upgrades {
+    width: 100%;
+  }
 }
