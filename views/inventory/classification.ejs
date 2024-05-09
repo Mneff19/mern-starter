@@ -1,0 +1,11 @@
+<%# Generates h1, or bounces if none is given %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%# For displaying any messages, hidden for now %>
+<%# messages() %>
+
+<%- grid %>
