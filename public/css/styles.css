@@ -10,6 +10,13 @@ body {
   margin: 0;
 }
 
+img {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+}
+
 header {
   padding: 12px 10px;
   margin-bottom: 24px;
@@ -50,9 +57,15 @@ nav ul {
   padding: 0;
 }
 
+nav ul a {
+  color: white;
+  text-decoration: none;
+}
+
 footer {
-  padding-top: 48px;
-  padding-left: 16px;
+  max-width: 507px;
+  padding: 48px 16px 24px;
+  margin: auto;
 }
 
 .hero {
@@ -133,6 +146,89 @@ footer {
   text-align: center;
 }
 
+/* Category grid view */
+.classification-h1 {
+  max-width: 475px;
+  padding-left: 16px;
+  margin: 56px auto 24px;
+}
+
+#inv-display {
+  max-width: 475px;
+  list-style-type: none;
+  padding: 32px 16px;
+  margin: auto;
+}
+
+#inv-display li {
+  background-color: rgb(253, 244, 233);
+  border: 2px solid black;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 3.2rem;
+}
+
+#inv-display li:last-of-type {
+  margin-bottom: 0;
+}
+
+#inv-display li img {
+  display: block;
+  width: 100%;
+}
+
+#inv-display li hr {
+  height: 3px;
+  border: none;
+  background-color: rgb(96, 96, 96);
+}
+
+#inv-display li h2 {
+  font-size: 20px;
+  text-align: center;
+}
+
+#inv-display li h2 a {
+  color: black;
+  text-decoration: none;
+}
+
+#inv-display li span {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+/* Car detail view */
+.car-detail {
+  max-width: 475px;
+  padding: 32px 16px;
+  margin: auto;
+}
+
+.car-detail .details-wrapper--info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.car-detail--price {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.car-detail--description {
+  font-size: 16px;
+}
+
+.car-detail--color,
+.car-detail--miles {
+  font-size: 18px;
+}
+
 @media only screen and (min-width: 1024px) {
   html {
     background-image: url(/images/site/checkerboard.jpg);
@@ -147,6 +243,13 @@ footer {
     background-color: white;
   }
 
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+  }
+
   .reviews-and-upgrades {
     display: flex;
     flex-direction: row-reverse;
@@ -157,4 +260,49 @@ footer {
   .upgrades {
     width: 100%;
   }
+
+  /* Category grid view */
+  .classification-h1 {
+    max-width: 100%;
+    padding-left: 32px;
+    margin: 56px 0 24px;
+  }
+
+  #inv-display {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 24px;
+    row-gap: 24px;
+    max-width: 100%;
+    padding: 32px 32px;
+    margin: auto;
+  }
+
+  #inv-display li {
+    margin-bottom: 0;
+  }
+
+  #inv-display li img {
+    max-height: 150px;
+  }
+
+  /* Car detail view */
+  .car-detail {
+    max-width: 100%;
+  }
+
+  .car-detail .details-wrapper {
+    display: flex;
+    column-gap: 64px;
+  }
+
+  .car-detail .details-wrapper img {
+    max-width: 425px;
+  }
 }
+
+
+/* TODO */
+/*
+*  4. Detail view styles
+*/
