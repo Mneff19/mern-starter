@@ -232,7 +232,7 @@ footer {
 @media only screen and (min-width: 1024px) {
   html {
     background-image: url(/images/site/checkerboard.jpg);
-    background-size: 350px;
+    background-size: 400px;
   }
 
   body {
@@ -301,8 +301,141 @@ footer {
   }
 }
 
+/* Account Login */
+.login--title {
+  padding-left: 32px;
+}
 
-/* TODO */
-/*
-*  4. Detail view styles
-*/
+.login-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  padding: 24px 48px;
+  border-radius: 16px;
+  margin: auto;
+}
+
+.login-form label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.login-form input {
+  font-size: 16px;
+  padding: 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid slategray;
+  transition: border-color 300ms;
+  margin-bottom: 36px;
+}
+
+.login-form input:hover {
+  border-color: rgb(6, 12, 23);
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: rgb(41, 95, 196);
+}
+
+.login-form input[type="submit"] {
+  background-color: rgb(41, 95, 196);
+  padding: 12px 36px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.login-form--bottom-text {
+  text-align: center;
+}
+
+.login-form--bottom-text-link {
+  color: rgb(41, 95, 196);
+}
+
+
+/* Account Register */
+.register--title {
+  padding-left: 32px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  padding: 24px 48px;
+  border-radius: 16px;
+  margin: auto;
+}
+
+.register-form label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.register-form input {
+  font-size: 16px;
+  padding: 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid slategray;
+  transition: border-color 300ms;
+  margin-bottom: 36px;
+}
+
+.register-form--password-wrapper {
+  position: relative;
+}
+
+.register-form--password-wrapper input {
+  width: 100%;
+  padding-right: 36px;
+  margin-bottom: 8px;
+}
+
+.register-form--password-wrapper #showPasswordBtn {
+  position: absolute;
+  right: 0;
+  top: 9px;
+  max-height: 26px;
+  max-width: 26px;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.register-form--password-wrapper #showPasswordBtn svg{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.register-form span {
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.register-form input:hover {
+  border-color: rgb(6, 12, 23);
+}
+
+.register-form input:focus {
+  outline: none;
+  border-color: rgb(41, 95, 196);
+}
+
+.register-form input[pattern]:focus:invalid {
+  border-color: rgb(196, 41, 41);
+}
+
+.register-form input[type="submit"] {
+  background-color: rgb(41, 95, 196);
+  padding: 12px 36px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
