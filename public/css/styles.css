@@ -340,6 +340,10 @@ footer {
   border-color: rgb(41, 95, 196);
 }
 
+.login-form input[pattern]:focus:invalid {
+  border-color: rgb(196, 41, 41);
+}
+
 .login-form input[type="submit"] {
   background-color: rgb(41, 95, 196);
   padding: 12px 36px;

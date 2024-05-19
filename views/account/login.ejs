@@ -1,17 +1,24 @@
 <%# Generates h1, or bounces if none is given %>
 <% if (title) { %>
     <h1 class="login--title"><%- title %></h1>
-    <%# For displaying any messages, hidden for now %>
-    <%- messages() %>
 <% } else {
     res.redirect('/')
 } %>
 
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+    </ul>
+<% } %>
+
 <form action="/account/login" method="post" class="login-form">
     <label for="account_email">Email</label>
-    <input type="email" name="account_email" id="account_email">
+    <input type="email" name="account_email" id="account_email" required>
     <label for="account_password">Password</label>
-    <input type="password" name="account_password" id="account_password">
+    <input type="password" name="account_password" id="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
     <input type="submit" value="Login">
     <div class="login-form--bottom-text-wrapper">
         <p class="login-form--bottom-text">No account? <a class="login-form--bottom-text-link" href="/account/register">Sign up</a></p>
