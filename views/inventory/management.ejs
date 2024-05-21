@@ -1,0 +1,13 @@
+<%# Generates h1, or bounces if none is given %>
+<% if (title) { %>
+    <h1><%- title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<div class="manage-inv--links">
+    <a href="/inv/add-classification">Add Classification</a>
+    <a href="/inv/add-inventory">Add Inventory</a>
+</div>

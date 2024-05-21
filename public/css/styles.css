@@ -10,6 +10,10 @@ body {
   margin: 0;
 }
 
+main {
+  padding: 0 16px;
+}
+
 img {
   display: inline-block;
   width: auto;
@@ -50,7 +54,7 @@ nav {
 nav ul {
   display: flex;
   justify-content: space-between;
-  max-width: 475px;
+  max-width: 600px;
   margin: auto;
   list-style-type: none;
   color: white;
@@ -69,7 +73,7 @@ footer {
 }
 
 .hero {
-  padding: 24px 16px;
+  padding: 24px 0;
   background-size: fill;
   background-repeat: no-repeat;
   background-position: center;
@@ -100,13 +104,9 @@ footer {
   font-weight: 600;
   text-decoration: none;
   width: fit-content;
-  padding: 12px 24px;
+  padding: 12px 8px;
   border-radius: 12px;
   margin-top: 12px;
-}
-
-.reviews-and-upgrades {
-  padding: 0 16px;
 }
 
 .reviews {
@@ -149,14 +149,13 @@ footer {
 /* Category grid view */
 .classification-h1 {
   max-width: 475px;
-  padding-left: 16px;
   margin: 56px auto 24px;
 }
 
 #inv-display {
   max-width: 475px;
   list-style-type: none;
-  padding: 32px 16px;
+  padding: 32px 0;
   margin: auto;
 }
 
@@ -204,7 +203,7 @@ footer {
 /* Car detail view */
 .car-detail {
   max-width: 475px;
-  padding: 32px 16px;
+  padding: 32px 0;
   margin: auto;
 }
 
@@ -243,6 +242,10 @@ footer {
     background-color: white;
   }
 
+  main {
+    padding: 0 32px;
+  }
+
   footer {
     display: flex;
     align-items: center;
@@ -264,7 +267,6 @@ footer {
   /* Category grid view */
   .classification-h1 {
     max-width: 100%;
-    padding-left: 32px;
     margin: 56px 0 24px;
   }
 
@@ -274,7 +276,7 @@ footer {
     column-gap: 24px;
     row-gap: 24px;
     max-width: 100%;
-    padding: 32px 32px;
+    padding: 32px 0;
     margin: auto;
   }
 
@@ -301,12 +303,10 @@ footer {
   }
 }
 
-/* Account Login */
-.login--title {
-  padding-left: 32px;
-}
-
-.login-form {
+/*
+* FORMS
+*/
+form {
   display: flex;
   flex-direction: column;
   max-width: 500px;
@@ -315,13 +315,23 @@ footer {
   margin: auto;
 }
 
-.login-form label {
+form label {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
-.login-form input {
+form select {
+  font-size: 16px;
+  padding: 12px;
+  background: none;
+  border: 2px solid slategray;
+  border-radius: 12px;
+  transition: border-color 300ms;
+  margin-bottom: 36px;
+}
+
+form input {
   font-size: 16px;
   padding: 12px;
   background: none;
@@ -331,20 +341,20 @@ footer {
   margin-bottom: 36px;
 }
 
-.login-form input:hover {
+form input:hover {
   border-color: rgb(6, 12, 23);
 }
 
-.login-form input:focus {
+form input:focus {
   outline: none;
   border-color: rgb(41, 95, 196);
 }
 
-.login-form input[pattern]:focus:invalid {
+form input[pattern]:focus:invalid {
   border-color: rgb(196, 41, 41);
 }
 
-.login-form input[type="submit"] {
+form input[type="submit"] {
   background-color: rgb(41, 95, 196);
   padding: 12px 36px;
   color: white;
@@ -352,6 +362,7 @@ footer {
   border-radius: 8px;
 }
 
+/* Account Login */
 .login-form--bottom-text {
   text-align: center;
 }
@@ -362,35 +373,6 @@ footer {
 
 
 /* Account Register */
-.register--title {
-  padding-left: 32px;
-}
-
-.register-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 500px;
-  padding: 24px 48px;
-  border-radius: 16px;
-  margin: auto;
-}
-
-.register-form label {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.register-form input {
-  font-size: 16px;
-  padding: 12px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid slategray;
-  transition: border-color 300ms;
-  margin-bottom: 36px;
-}
-
 .register-form--password-wrapper {
   position: relative;
 }
@@ -423,23 +405,20 @@ footer {
   margin-bottom: 24px;
 }
 
-.register-form input:hover {
-  border-color: rgb(6, 12, 23);
+/*
+* MANAGE INVENTORY
+*/
+.manage-inv--links {
+  margin-top: 48px;
 }
 
-.register-form input:focus {
-  outline: none;
-  border-color: rgb(41, 95, 196);
-}
-
-.register-form input[pattern]:focus:invalid {
-  border-color: rgb(196, 41, 41);
-}
-
-.register-form input[type="submit"] {
-  background-color: rgb(41, 95, 196);
-  padding: 12px 36px;
+.manage-inv--links a {
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-right: 12px;
   color: white;
-  border: none;
-  border-radius: 8px;
+  background-color: rgb(41, 95, 196);
+  padding: 16px 24px;
+  border-radius: 12px;
 }
