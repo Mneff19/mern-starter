@@ -1,0 +1,17 @@
+<%# Generates h1, or bounces if none is given %>
+<% if (title) { %>
+    <h1 class="login--title"><%- title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+    </ul>
+<% } %>
+
+You're logged in!
