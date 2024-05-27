@@ -123,4 +123,94 @@ accountCont.registerAccount = async function (req, res) {
   }
 }
 
+/* ***************************
+ *  Build update view
+ * ************************** */
+accountCont.buildUpdateView = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./account/update", {
+    title: "Update Account",
+    nav,
+    errors: null
+  })
+}
+
+/* ****************************************
+*  Process Updating Account Info
+* *************************************** */
+accountCont.updateAccountInfo = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+
+  const regResult = await accountModel.updateAccountInfo(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Info updated successfully!`
+    )
+    res.status(201).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+    })
+  }
+}
+
+/* ****************************************
+*  Process Changing Account Password
+* *************************************** */
+accountCont.changeAccountPassword = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { account_password, account_id } = req.body
+
+  const regResult = await accountModel.changeAccountPassword(
+    account_password,
+    account_id
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Password changed successfully!`
+    )
+    res.status(201).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the change failed.")
+    res.status(501).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+    })
+  }
+}
+
+/* ****************************************
+* Handle log out
+**************************************** */
+accountCont.logout = async function (req, res, next) {
+    res.clearCookie("jwt")
+    req.flash(
+      "notice",
+      `Logged out!`
+    )
+    return res.redirect("/")
+ }
+
 module.exports = accountCont

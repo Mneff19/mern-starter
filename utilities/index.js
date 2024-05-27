@@ -111,7 +111,6 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
-
 /* ****************************************
 * Middleware to check token validity
 **************************************** */
@@ -132,6 +131,33 @@ Util.checkJWTToken = (req, res, next) => {
     })
   } else {
    next()
+  }
+ }
+
+/* ****************************************
+* Middleware to check authorization
+**************************************** */
+Util.checkNonBasicAuthorization = (req, res, next) => {
+  if (req.cookies.jwt) {
+   jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+     if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      return res.redirect("/account/login")
+     }
+     if(accountData.account_type != "Client") {
+        next()
+     } else {
+        req.flash("notice", 'Sorry, you do not have access to this page.')
+        return res.redirect("/account/login")
+     }
+    })
+  } else {
+    req.flash("Please log in")
+    return res.redirect("/account/login")
   }
  }
 
