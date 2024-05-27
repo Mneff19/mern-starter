@@ -212,7 +212,6 @@ invCont.updateInventory = async function (req, res, next) {
     inv_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id
   )
   let nav = await utilities.getNav()
-  console.log(updateResult);
 
   if (updateResult) {
     const itemName = updateResult.inv_make + " " + updateResult.inv_model
@@ -240,6 +239,70 @@ invCont.updateInventory = async function (req, res, next) {
       inv_miles,
       inv_color,
       classification_id,
+      errors: null
+    })
+  }
+}
+
+/* ***************************
+ *  Return Inventory Info for Deleting As JSON
+ * ************************** */
+invCont.deleteInventoryJSON = async function (req, res, next) {
+  const inventory_id = parseInt(req.params.inventory_id)
+  
+  const carData = await invModel.getInventoryByCarId(inventory_id);
+  let nav = await utilities.getNav()
+  const itemName = `${carData[0].inv_make} ${carData[0].inv_model}`
+  
+  if (carData) {
+    res.status(201).render("inventory/delete-inventory", {
+      title: "Delete " + itemName,
+      nav,
+      inv_id: carData[0].inv_id,
+      inv_make: carData[0].inv_make,
+      inv_model: carData[0].inv_model,
+      inv_year: carData[0].inv_year,
+      inv_price: carData[0].inv_price,
+      errors: null
+    })
+  } else {
+    req.flash("notice", "Sorry, editing inventory failed. Please try again")
+    res.status(501).render("inventory/delete-inventory", {
+      title: "Delete " + itemName,
+      nav,
+      inventory_id,
+      errors: null
+    })
+  }
+}
+
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+invCont.deleteInventory = async function (req, res, next) {
+  console.log(req.body)
+  const { inv_make, inv_model, inv_year, inv_price, inv_id } = req.body;
+
+  const deleteResult = await invModel.deleteInventory( inv_id )
+  let nav = await utilities.getNav()
+
+  if (deleteResult) {
+    req.flash(
+      "notice",
+      `Inventory was deleted!`
+    )
+    res.redirect("/inv/")
+  } else {
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the delete failed.")
+    res.status(501).render("inventory/delete-inventory", {
+      title: "Delete " + itemName,
+      nav,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
       errors: null
     })
   }

@@ -60,12 +60,6 @@ async function updateInventory(
   inv_color,
   classification_id
 ) {
-  console.log("inv_make: " + inv_make)
-  console.log("inv_model: " + inv_model)
-  console.log("inv_description: " + inv_description)
-  console.log("inv_image: " + inv_image)
-  console.log("inv_thumbnail: " + inv_thumbnail)
-  console.log("inv_id: " + inv_id)
   try {
     const sql =
       "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_image = $4, inv_thumbnail = $5, inv_price = $6, inv_year = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
@@ -85,6 +79,24 @@ async function updateInventory(
     return data.rows[0]
   } catch (error) {
     console.error("model error: " + error)
+  }
+}
+
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+async function deleteInventory(
+  inv_id
+) {
+  try {
+    const sql =
+      "DELETE FROM public.inventory WHERE inv_id = $1"
+    const data = await pool.query(sql, [
+      inv_id
+    ])
+    return data
+  } catch (error) {
+    console.error("Delete inventory error: " + error)
   }
 }
 
@@ -122,4 +134,4 @@ async function getInventoryByCarId(car_id) {
     }
 }
 
-module.exports = {addClassification, checkExistingClassification, getClassifications, getInventoryByClassificationId, getInventoryByCarId, addInventory, updateInventory};
+module.exports = {addClassification, checkExistingClassification, getClassifications, getInventoryByClassificationId, getInventoryByCarId, addInventory, updateInventory, deleteInventory};
