@@ -362,6 +362,10 @@ form input[type="submit"] {
   border-radius: 8px;
 }
 
+form input[type="submit"]:disabled {
+  background-color: rgb(65, 66, 66);
+}
+
 /* Account Login */
 .login-form--bottom-text {
   text-align: center;
