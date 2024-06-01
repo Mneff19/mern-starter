@@ -1,0 +1,22 @@
+<%# Generates h1, or bounces if none is given %>
+<% if (title) { %>
+    <h1 class="login--title"><%- title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+    </ul>
+<% } %>
+
+<h2>Welcome, <%- locals.accountData.account_firstname %>!</h2>
+<a title="Click to update account" href="/account/update/<%- locals.accountData.account_id %>">Update Account</a>
+<% if (locals.accountData.account_type != "Client" ) { %>
+    <h3>Inventory Management</h3>
+    <a title="Click to go to inventory management" href="/inv/">Manage Inventory</a>
+<% } %>

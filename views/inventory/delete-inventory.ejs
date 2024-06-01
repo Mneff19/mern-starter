@@ -1,0 +1,29 @@
+<%# Generates h1, or bounces if none is given %>
+<% if (title) { %>
+    <h1><%- title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+    </ul>
+<% } %>
+
+<p class="delete-text">Confirm deletion - This will be permanent.</p>
+<form action="/inv/delete" method="post" class="inventory-form">
+    <label for="inv_make">Make</label>
+    <input type="text" name="inv_make" id="inv_make" value="<%= locals.inv_make %>" readonly required>
+    <label for="inv_model">Model</label>
+    <input type="text" name="inv_model" id="inv_model" value="<%= locals.inv_model %>" readonly required>
+    <label for="inv_year">Year</label>
+    <input type="number" name="inv_year" id="inv_year" min="1886" max="2024" value="<%= locals.inv_year %>" readonly required>
+    <label for="inv_price">Price</label>
+    <input type="number" name="inv_price" id="inv_price" min="1" max="1000000000" value="<%= locals.inv_price %>" readonly required>
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
+    <input type="submit" value="Delete Vehicle">
+</form>

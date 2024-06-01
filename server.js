@@ -17,6 +17,7 @@ const accountRoute = require("./routes/accountRoute")
 const baseController = require("./controllers/baseController")
 const session = require("express-session")
 const pool = require('./database/')
+const cookieParser = require("cookie-parser")
 
 /* ***********************
  * Middleware
@@ -41,6 +42,10 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+app.use(cookieParser())
+
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Tempaltes

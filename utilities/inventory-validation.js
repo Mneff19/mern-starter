@@ -88,7 +88,6 @@ validate.newInventoryRules = () => {
         .notEmpty()
         .isLength({ min: 1 })
         .matches("^\/images\/vehicles\/.*\.(jpg|png)$")
-        .escape()
         .withMessage("Please provide a relative image path to a jpg or png in /images/vehicles."),
 
         // inv_thumbnail is required and must be a string
@@ -97,7 +96,6 @@ validate.newInventoryRules = () => {
         .notEmpty()
         .isLength({ min: 1 })
         .matches("^\/images\/vehicles\/.*\.(jpg|png)$")
-        .escape()
         .withMessage("Please provide a relative image path to a jpg or png in /images/vehicles."),
 
         // valid inv_miles is required and must be int
@@ -133,11 +131,43 @@ validate.checkInventoryData = async (req, res, next) => {
     errors = validationResult(req)
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
-        let classificationList = await utilities.buildClassificationList()
+        let classificationList = await utilities.buildClassificationList(classification_id)
         res.render("inventory/add-inventory", {
             title: "Add Inventory",
             nav,
             classificationList,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_miles,
+            inv_color,
+            classification_id,
+            errors
+        })
+        return
+    }
+    next()
+}
+
+/* ******************************
+* Check data and return errors or continue to add inventory
+* ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+    const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        let classificationList = await utilities.buildClassificationList(classification_id)
+        res.render("inventory/edit-inventory", {
+            title: "Edit " + inv_make + inv_model,
+            nav,
+            classificationList,
+            inv_id,
             inv_make,
             inv_model,
             inv_year,
