@@ -321,7 +321,8 @@ form label {
   margin-bottom: 8px;
 }
 
-form select {
+form select,
+select {
   font-size: 16px;
   padding: 12px;
   background: none;
@@ -412,6 +413,10 @@ form input[type="submit"]:disabled {
 /*
 * MANAGE INVENTORY
 */
+.manage-inv--heading {
+  padding-top: 24px;
+}
+
 .manage-inv--links {
   margin-top: 48px;
 }
@@ -425,4 +430,25 @@ form input[type="submit"]:disabled {
   background-color: rgb(41, 95, 196);
   padding: 16px 24px;
   border-radius: 12px;
+}
+
+table thead th {
+  font-size: 24px;
+  text-align: left;
+  padding-bottom: 16px;
+}
+
+table tbody td {
+  font-size: 18px;
+  padding-bottom: 10px;
+}
+
+table tbody td a {
+  color: rgb(41, 95, 196);
+  padding-left: 12px;
+  text-decoration: none;
+}
+
+table tbody td a:hover {
+  text-decoration: underline;
 }

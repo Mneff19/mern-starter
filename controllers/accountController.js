@@ -176,8 +176,22 @@ accountCont.changeAccountPassword = async function (req, res) {
   let nav = await utilities.getNav()
   const { account_password, account_id } = req.body
 
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    res.status(500).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+    })
+  }
+
   const regResult = await accountModel.changeAccountPassword(
-    account_password,
+    hashedPassword,
     account_id
   )
 

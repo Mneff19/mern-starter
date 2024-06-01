@@ -13,7 +13,7 @@ router.get("/edit/:inventory_id", utilities.checkNonBasicAuthorization, utilitie
 router.get("/delete/:inventory_id",  utilities.checkNonBasicAuthorization, utilities.handleErrors(invController.deleteInventoryJSON));
 
 // Inventory management view
-router.get("/", utilities.handleErrors(invController.buildManagementView));
+router.get("/",  utilities.checkNonBasicAuthorization, utilities.handleErrors(invController.buildManagementView));
 
 // Route to handle adding classification
 router.get("/add-classification", utilities.checkNonBasicAuthorization, utilities.handleErrors(invController.buildAddClassificationView));
