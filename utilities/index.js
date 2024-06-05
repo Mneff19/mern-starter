@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const reviewModel = require("../models/review-model")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const Util = {}
@@ -62,10 +63,10 @@ Util.buildClassificationGrid = async function(data){
 /* **************************************
 * Build the detail view HTML
 * ************************************ */
-Util.buildDetailView = async function(data){
+Util.buildDetailView = async function(data, isLoggedIn, accountDisplayName, accountId, inv_id){
   let detailView
-  if(data.length > 0){
-    const vehicle = data[0]
+  if(data["invData"].length > 0){
+    const vehicle = data["invData"][0]
     detailView = '<section class="car-detail">'
       detailView += '<h1 class="car-detail--title">'
                       + vehicle.inv_year + ' '
@@ -83,10 +84,62 @@ Util.buildDetailView = async function(data){
                       + '</div>'
                     + '</div>'
     detailView += '</section>'
+    detailView += '<section>'
+                    + '<h2>Reviews</h2>'
+      if(data["reviewData"].length > 0){
+        const reviews = data["reviewData"]
+        detailView += '<ul class="reviews-wrapper">'
+
+        for (let review of reviews) {
+          detailView += '<li class="reviews-wrapper--review">'
+                          + '<p class="reviews-wrapper--review_text">' + review.review_text + '</p>'
+                          + '<div class="reviews-wrapper--review_reviewer-and-date-wrapper">'
+                              + '<h3 class="reviews-wrapper--review_reviewer">' + review.account_firstname[0] + review.account_lastname + '</h3>'
+                              + '<p class="reviews-wrapper--review_date">' + Util.formatDate(review.review_date) + '</p>'
+                          + '</div>'
+                        + '</li>'
+        }
+        detailView += '</ul>'
+      } else {
+        detailView += '<p class="notice">No reviews yet... Be the first to add one now! </p>'
+      }
+        
+      if(isLoggedIn) {
+        detailView += '<h3>Leave your review!</h3>'
+        detailView += this.buildReviewAddForm(accountDisplayName, accountId, inv_id)
+      } else {
+        detailView += '<p><a href="/account/login">Log in</a> to add a review!</p>'
+      }
+    detailView += '</section>'
   } else { 
     detailView += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return detailView
+}
+
+Util.formatDate = function(dateString) {
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1)
+  const day = String(date.getDate())
+  const year = date.getFullYear();
+
+  return `${month}/${day}/${year}`;
+}
+
+Util.buildReviewAddForm = function (displayName, accountId, invId) {
+  form = "";
+
+  form += '<form action="/review/add-review" method="post" class="review-form">'
+        +    '<label for="displayname">Display Name</label>'
+        +    '<input type="text" name="displayname" id="displayname" value="' + displayName + '" readonly required></input>'
+        +    '<label for="review_text">Review Text</label>'
+        +    '<input type="text" name="review_text" id="review_text" value="" required></input>'
+        +    '<input type="hidden" name="inv_id" value="' + invId + '">'
+        +    '<input type="hidden" name="account_id" value="' + accountId + '">'
+        +    '<input type="submit" value="Add Review">'
+        + '</form>';
+
+  return form;
 }
 
 /* **************************************
@@ -109,6 +162,30 @@ Util.buildClassificationList = async function (classification_id = null) {
   })
   classificationList += "</select>"
   return classificationList
+}
+
+/* **************************************
+* Build the review list HTML for a given user
+* ************************************ */
+Util.buildAccountReviewList = async function (account_id) {
+  let data = await reviewModel.getReviewsByAccountId(account_id)
+  let reviewList =
+    '<ul class="review-list">'
+    if(data.length > 0) {
+      data.forEach((row) => {
+        reviewList += '<li>'
+                   +      '<span><strong>' + row.inv_make + " " + row.inv_model + "</strong>: " + row.review_text + '</span>'
+                   +      '<div>'
+                   +          '<a href="/review/update/' + row.review_id + '">Update</a>'
+                   +          '<a href="/review/delete/' + row.review_id + '">Delete</a>'
+                   +      '<div>'
+                   +  '</li>'
+      })
+    } else {
+      reviewList += "<li>No reviews!</li>"
+    }
+  reviewList += "</ul>"
+  return reviewList
 }
 
 /* ****************************************

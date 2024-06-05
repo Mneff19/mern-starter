@@ -10,10 +10,12 @@ const accountCont = {}
  *  Build management view
  * ************************** */
 accountCont.buildManagementView = async function (req, res, next) {
+  let reviewList = await utilities.buildAccountReviewList(res.locals.accountData.account_id);
   let nav = await utilities.getNav()
   res.render("./account/management", {
     title: "Account",
     nav,
+    reviewList,
     errors: null
   })
 }

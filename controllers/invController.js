@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const reviewModel = require("../models/review-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -24,14 +25,27 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * ************************** */
 invCont.buildByCarId = async function (req, res, next) {
   const car_id = req.params.carId
-  const data = await invModel.getInventoryByCarId(car_id)
-  const detailView = await utilities.buildDetailView(data)
+  const invData = await invModel.getInventoryByCarId(car_id)
+  const reviewData = await reviewModel.getReviewsByInventoryId(car_id)
+  const data = {
+    "invData": invData,
+    "reviewData": reviewData
+  }
+
+  let accountName = "";
+  let accountId = "";
+  if ('accountData' in res.locals) {
+    accountName = res.locals.accountData.account_firstname[0] + res.locals.accountData.account_lastname;
+    accountId = res.locals.accountData.account_id;
+  }
+  const detailView = await utilities.buildDetailView(data, res.locals.loggedin, accountName, accountId, car_id)
   let nav = await utilities.getNav()
-  const carName = data[0].inv_make + " " + data[0].inv_model;
+  const carName = invData[0].inv_make + " " + invData[0].inv_model;
   res.render("./inventory/detail", {
     title: carName + " details",
     nav,
     detailView,
+    errors: null
   })
 }
 
