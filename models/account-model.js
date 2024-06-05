@@ -83,4 +83,23 @@ async function changeAccountPassword(
   }
 }
 
-module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccountInfo, changeAccountPassword};
+/* *****************************
+* Return account display name using account_id
+* ***************************** */
+async function getAccountDisplayNameByID (account_id) {
+  try {
+    const result = await pool.query(
+      'SELECT account_firstname, account_lastname FROM account WHERE account_id = $1',
+      [account_id])
+    if (result) {
+      const accountData = result.rows[0]
+      return accountData.account_firstname[0] + accountData.account_lastname
+    } else {
+      return null;
+    }
+  } catch (error) {
+    return new Error("No matching id found")
+  }
+}
+
+module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccountInfo, changeAccountPassword, getAccountDisplayNameByID};

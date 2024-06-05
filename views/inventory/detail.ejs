@@ -4,7 +4,13 @@
     res.redirect('/')
 } %>
 
-<%# For displaying any messages, hidden for now %>
-<%# messages() %>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+    </ul>
+<% } %>
 
 <%- detailView %>

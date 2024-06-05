@@ -62,10 +62,10 @@ Util.buildClassificationGrid = async function(data){
 /* **************************************
 * Build the detail view HTML
 * ************************************ */
-Util.buildDetailView = async function(data){
+Util.buildDetailView = async function(data, isLoggedIn, accountDisplayName, accountId, inv_id){
   let detailView
-  if(data.length > 0){
-    const vehicle = data[0]
+  if(data["invData"].length > 0){
+    const vehicle = data["invData"][0]
     detailView = '<section class="car-detail">'
       detailView += '<h1 class="car-detail--title">'
                       + vehicle.inv_year + ' '
@@ -83,10 +83,51 @@ Util.buildDetailView = async function(data){
                       + '</div>'
                     + '</div>'
     detailView += '</section>'
+    detailView += '<section>'
+                    + '<h2>Reviews</h2>'
+      if(data["reviewData"].length > 0){
+        const reviews = data["reviewData"]
+        detailView += '<ul class="reviews-wrapper">'
+
+        for (let review of reviews) {
+          detailView += '<li class="reviews-wrapper--review">'
+                          + '<h2 class="reviews-wrapper--review_reviewer">' + review.account_firstname[0] + review.account_lastname + '</h2>'
+                          + '<p class="reviews-wrapper--review_date">' + review.review_date + '</p>'
+                          + '<p class="reviews-wrapper--review_text">' + review.review_text + '</p>'
+                        + '</li>'
+        }
+        detailView += '</ul>'
+      } else {
+        detailView += '<p class="notice">No reviews... [ADD MORE, SEE DOC/VID FOR DETAILS] </p>'
+      }
+        
+      if(isLoggedIn) {
+        detailView += '<p>Leave a review!</p>'
+        detailView += this.buildReviewAddForm(accountDisplayName, accountId, inv_id)
+      } else {
+        detailView += '<p><a href="/account/login">Log in</a> to add a review!</p>'
+      }
+    detailView += '</section>'
   } else { 
     detailView += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return detailView
+}
+
+Util.buildReviewAddForm = function (displayName, accountId, invId) {
+  form = "";
+
+  form += '<form action="/review/add-review" method="post" class="review-form">'
+        +    '<label for="displayname">Display Name</label>'
+        +    '<input type="text" name="displayname" id="displayname" value="' + displayName + '" readonly required></input>'
+        +    '<label for="review_text">Review Text</label>'
+        +    '<input type="text" name="review_text" id="review_text" value="" required></input>'
+        +    '<input type="hidden" name="inv_id" value="' + invId + '">'
+        +    '<input type="hidden" name="account_id" value="' + accountId + '">'
+        +    '<input type="submit" value="Add Review">'
+        + '</form>';
+
+  return form;
 }
 
 /* **************************************
