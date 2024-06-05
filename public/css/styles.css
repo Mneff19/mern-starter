@@ -21,6 +21,10 @@ img {
   height: 100%;
 }
 
+a {
+  color: rgb(41, 95, 196);
+}
+
 header {
   padding: 12px 10px;
   margin-bottom: 24px;
@@ -226,6 +230,38 @@ footer {
 .car-detail--color,
 .car-detail--miles {
   font-size: 18px;
+}
+
+.reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.2rem;
+}
+
+.reviews-wrapper--review_reviewer-and-date-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.reviews-wrapper--review_reviewer {
+  font-size: 13px;
+}
+
+.reviews-wrapper--review_date {
+  font-size: 13px;
+  color: grey;
+}
+
+.reviews-wrapper--review_text {
+  font-size: 16px;
+}
+
+.reviews-wrapper--review_reviewer,
+.reviews-wrapper--review_date,
+.reviews-wrapper--review_text {
+  margin: 0;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -451,4 +487,29 @@ table tbody td a {
 
 table tbody td a:hover {
   text-decoration: underline;
+}
+
+/*
+* ACCOUNT MANAGEMENT
+*/
+.manage-inventory--heading,
+.manage-reviews--heading {
+  margin-top: 2.4rem;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8rem;
+}
+
+.review-list li {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 2.4rem;
+}
+
+.review-list li div {
+  display: flex;
+  column-gap: 1.2rem;
 }

@@ -92,18 +92,20 @@ Util.buildDetailView = async function(data, isLoggedIn, accountDisplayName, acco
 
         for (let review of reviews) {
           detailView += '<li class="reviews-wrapper--review">'
-                          + '<h2 class="reviews-wrapper--review_reviewer">' + review.account_firstname[0] + review.account_lastname + '</h2>'
-                          + '<p class="reviews-wrapper--review_date">' + review.review_date + '</p>'
                           + '<p class="reviews-wrapper--review_text">' + review.review_text + '</p>'
+                          + '<div class="reviews-wrapper--review_reviewer-and-date-wrapper">'
+                              + '<h3 class="reviews-wrapper--review_reviewer">' + review.account_firstname[0] + review.account_lastname + '</h3>'
+                              + '<p class="reviews-wrapper--review_date">' + Util.formatDate(review.review_date) + '</p>'
+                          + '</div>'
                         + '</li>'
         }
         detailView += '</ul>'
       } else {
-        detailView += '<p class="notice">No reviews... [ADD MORE, SEE DOC/VID FOR DETAILS] </p>'
+        detailView += '<p class="notice">No reviews yet... Be the first to add one now! </p>'
       }
         
       if(isLoggedIn) {
-        detailView += '<p>Leave a review!</p>'
+        detailView += '<h3>Leave your review!</h3>'
         detailView += this.buildReviewAddForm(accountDisplayName, accountId, inv_id)
       } else {
         detailView += '<p><a href="/account/login">Log in</a> to add a review!</p>'
@@ -113,6 +115,15 @@ Util.buildDetailView = async function(data, isLoggedIn, accountDisplayName, acco
     detailView += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return detailView
+}
+
+Util.formatDate = function(dateString) {
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1)
+  const day = String(date.getDate())
+  const year = date.getFullYear();
+
+  return `${month}/${day}/${year}`;
 }
 
 Util.buildReviewAddForm = function (displayName, accountId, invId) {
@@ -163,9 +174,11 @@ Util.buildAccountReviewList = async function (account_id) {
     if(data.length > 0) {
       data.forEach((row) => {
         reviewList += '<li>'
-                   +      '<span>' + row.inv_make + " " + row.inv_model + ": " + row.review_text + '</span>'
-                   +      '<a href="/review/update/' + row.review_id + '">Update</a>'
-                   +      '<a href="/review/delete/' + row.review_id + '">Delete</a>'
+                   +      '<span><strong>' + row.inv_make + " " + row.inv_model + "</strong>: " + row.review_text + '</span>'
+                   +      '<div>'
+                   +          '<a href="/review/update/' + row.review_id + '">Update</a>'
+                   +          '<a href="/review/delete/' + row.review_id + '">Delete</a>'
+                   +      '<div>'
                    +  '</li>'
       })
     } else {
