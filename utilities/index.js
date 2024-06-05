@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const reviewModel = require("../models/review-model")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const Util = {}
@@ -150,6 +151,28 @@ Util.buildClassificationList = async function (classification_id = null) {
   })
   classificationList += "</select>"
   return classificationList
+}
+
+/* **************************************
+* Build the review list HTML for a given user
+* ************************************ */
+Util.buildAccountReviewList = async function (account_id) {
+  let data = await reviewModel.getReviewsByAccountId(account_id)
+  let reviewList =
+    '<ul class="review-list">'
+    if(data.length > 0) {
+      data.forEach((row) => {
+        reviewList += '<li>'
+                   +      '<span>' + row.inv_make + " " + row.inv_model + ": " + row.review_text + '</span>'
+                   +      '<a href="/review/update/' + row.review_id + '">Update</a>'
+                   +      '<a href="/review/delete/' + row.review_id + '">Delete</a>'
+                   +  '</li>'
+      })
+    } else {
+      reviewList += "<li>No reviews!</li>"
+    }
+  reviewList += "</ul>"
+  return reviewList
 }
 
 /* ****************************************
