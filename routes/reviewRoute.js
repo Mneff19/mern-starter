@@ -30,8 +30,8 @@ router.get("/delete/:review_id", utilities.handleErrors(reviewController.deleteR
 // Route to handle updating reviews
 router.post(
     "/delete",
-    // regValidate.updateRules(),
-    // regValidate.checkUpdateReviewData,
+    regValidate.deleteRules(),
+    regValidate.checkDeleteReviewData,
     utilities.handleErrors(reviewController.deleteReview)
 );
 

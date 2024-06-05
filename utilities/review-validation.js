@@ -61,7 +61,7 @@ validate.updateRules = () => {
         body("review_id")
         .trim()
         .isInt()
-        .withMessage("A valid account ID is required."),
+        .withMessage("A valid review ID is required."),
     ]
 }
 
@@ -69,13 +69,45 @@ validate.updateRules = () => {
 * Check data and return errors or continue to update review
 * ***************************** */
 validate.checkUpdateReviewData = async (req, res, next) => {
-    const { review_text, account_id, inv_id } = req.body
     let errors = []
     errors = validationResult(req)
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
         let reviewList = await utilities.buildAccountReviewList(res.locals.accountData.account_id);
         req.flash("notice", "Sorry, the update failed.")
+        res.status(501).render("account/management", {
+            title: "Account",
+            nav,
+            reviewList,
+            errors,
+        })
+        return
+    }
+    next()
+}
+
+/*  **********************************
+*  Delete Review Data Validation Rules
+* ********************************* */
+validate.deleteRules = () => {
+    return [
+        body("review_id")
+        .trim()
+        .isInt()
+        .withMessage("A valid review ID is required."),
+    ]
+}
+
+/* ******************************
+* Check data and return errors or continue to delete review
+* ***************************** */
+validate.checkDeleteReviewData = async (req, res, next) => {
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        let reviewList = await utilities.buildAccountReviewList(res.locals.accountData.account_id);
+        req.flash("notice", "Sorry, the delete failed.")
         res.status(501).render("account/management", {
             title: "Account",
             nav,

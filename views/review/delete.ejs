@@ -19,7 +19,7 @@
     <label for="displayname">Display Name</label>
     <input type="text" name="displayname" id="displayname" value="<%= locals.accountData.account_firstname[0] + locals.accountData.account_lastname %>" readonly required>
     <label for="review_text">Review Text</label>
-    <input type="text" name="review_text" id="review_text" value="<%= review_text %>" required>
+    <input type="text" name="review_text" id="review_text" value="<%= review_text %>" readonly required>
     <input type="hidden" name="review_id" value="<%= review_id %>">
     <input type="submit" value="Delete Review">
 </form>
